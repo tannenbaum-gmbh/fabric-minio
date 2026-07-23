@@ -1,0 +1,6 @@
+jupyterlab==4.2.5
+ipykernel==6.29.5
+azure-identity==1.23.0
+azure-mgmt-resource==23.3.0
+azure-mgmt-appcontainers==3.2.0
+azure-storage-blob==12.26.0
