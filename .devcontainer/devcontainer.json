@@ -1,0 +1,31 @@
+{
+  "name": "fabric-minio Dev Container",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "hostRequirements": {
+    "cpus": 2
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/azure-cli:1": {
+      "version": "latest",
+      "installBicep": true
+    }
+  },
+  "waitFor": "postCreateCommand",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "README.md",
+        "notebooks/01-solution-walkthrough.ipynb"
+      ]
+    },
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-bicep",
+        "ms-azuretools.vscode-azureresourcegroups",
+        "ms-python.python",
+        "ms-toolsai.jupyter"
+      ]
+    }
+  }
+}
