@@ -23,13 +23,16 @@ param minioRootUser string
 @description('Secret access key that MinIO exposes to clients.')
 param minioRootPassword string
 
+@description('CPU allocation for the MinIO container, expressed as a string so it can be converted to the numeric value expected by the AVM module.')
+param minioCpu string = '0.5'
+
 @description('Memory allocation for the MinIO container.')
 param minioMemory string = '1Gi'
 
 @description('Optional tags applied to all deployed resources.')
 param tags object = {}
 
-module logAnalyticsWorkspace 'br/public:avm/res/operational-insights/workspace:0.16' = {
+module logAnalyticsWorkspace 'br/public:avm/res/operational-insights/workspace:0.16.0' = {
   name: 'deploy-log-analytics-workspace'
   params: {
     name: logAnalyticsWorkspaceName
@@ -47,7 +50,7 @@ resource logAnalyticsWorkspaceResource 'Microsoft.OperationalInsights/workspaces
   name: logAnalyticsWorkspaceName
 }
 
-module managedEnvironment 'br/public:avm/res/app/managed-environment:0.14' = {
+module managedEnvironment 'br/public:avm/res/app/managed-environment:0.14.0' = {
   name: 'deploy-container-apps-environment'
   params: {
     name: containerAppsEnvironmentName
@@ -70,7 +73,7 @@ resource managedEnvironmentResource 'Microsoft.App/managedEnvironments@2025-10-0
   name: containerAppsEnvironmentName
 }
 
-module containerApp 'br/public:avm/res/app/container-app:0.23' = {
+module containerApp 'br/public:avm/res/app/container-app:0.23.0' = {
   name: 'deploy-minio-container-app'
   params: {
     name: containerAppName
@@ -120,7 +123,7 @@ module containerApp 'br/public:avm/res/app/container-app:0.23' = {
           }
         ]
         resources: {
-          cpu: 0.5
+          cpu: json(minioCpu)
           memory: minioMemory
         }
       }
