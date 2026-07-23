@@ -71,6 +71,9 @@ module managedEnvironment 'br/public:avm/res/app/managed-environment:0.14.0' = {
 
 resource managedEnvironmentResource 'Microsoft.App/managedEnvironments@2025-10-02-preview' existing = {
   name: containerAppsEnvironmentName
+  dependsOn: [
+    managedEnvironment
+  ]
 }
 
 module containerApp 'br/public:avm/res/app/container-app:0.23.0' = {
@@ -138,6 +141,9 @@ module containerApp 'br/public:avm/res/app/container-app:0.23.0' = {
 
 resource containerAppResource 'Microsoft.App/containerApps@2026-01-01' existing = {
   name: containerAppName
+  dependsOn: [
+    containerApp
+  ]
 }
 
 output fabricShortcutServiceUrl string = 'https://${containerAppResource.properties.configuration.ingress.fqdn}'
